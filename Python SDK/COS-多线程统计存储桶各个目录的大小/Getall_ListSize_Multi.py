@@ -193,7 +193,6 @@ def _get_list_start(bucket, marker, CommonPrefixes, maxkeys, files_exits):  # èŽ
     threads = []
     directory_size_dict = []
     if files_exits == 1:
-        root_directory_size = _root_size(file_count, size, bucket, marker, maxkeys)
         directory_size = json.dumps({'Prefix': '/', 'Size': 0, 'Counts': 0})
         directory_size_dict.append(directory_size)
         for prefix in CommonPrefixes:
