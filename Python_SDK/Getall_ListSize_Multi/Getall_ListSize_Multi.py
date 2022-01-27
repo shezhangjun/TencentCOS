@@ -163,7 +163,8 @@ def _prefix_size(file_count, size, bucket, prefix, marker, maxkeys):  # 计算�
     nextmarker = _get_marker(lists)
     if nextmarker == '':
         list_size_count_json = json.loads(_get_nomarker_list_size(file_count, size, lists))
-        Size = json.dumps({'Prefix': prefix, 'Size': list_size_count_json['Size'], 'Counts': list_size_count_json['Counts']})
+        Size = json.dumps(
+            {'Prefix': prefix, 'Size': list_size_count_json['Size'], 'Counts': list_size_count_json['Counts']})
         return (Size)
     else:
         while nextmarker != '':
@@ -181,7 +182,7 @@ def _prefix_size(file_count, size, bucket, prefix, marker, maxkeys):  # 计算�
             lists = _get_bucket_lists(bucket, prefix, delimiter, marker, maxkeys)
             prefix_size = json.loads(_get_nomarker_list_size(file_count, size, lists))['Size']
             prefix_counts = json.loads(_get_nomarker_list_size(file_count, size, lists))['Counts']
-            Size = json.dumps({'Prefix': prefix, 'Size': prefix_size, 'Counts':prefix_counts})
+            Size = json.dumps({'Prefix': prefix, 'Size': prefix_size, 'Counts': prefix_counts})
             return (Size)
 
 
@@ -193,6 +194,7 @@ def _get_list_start(bucket, marker, CommonPrefixes, maxkeys, files_exits):  # �
     threads = []
     directory_size_dict = []
     if files_exits == 1:
+        root_directory_size = _root_size(file_count, size, bucket, marker, maxkeys)
         directory_size = json.dumps({'Prefix': '/', 'Size': 0, 'Counts': 0})
         directory_size_dict.append(directory_size)
         for prefix in CommonPrefixes:
@@ -222,7 +224,9 @@ def _get_list_start(bucket, marker, CommonPrefixes, maxkeys, files_exits):  # �
         return 'Success list'
     elif files_exits == 3:
         root_directory_size = _root_size(file_count, size, bucket, marker, maxkeys)
-        directory_size = json.dumps({'Prefix': '/', 'Size': int(json.loads(root_directory_size)['Size_counts_json']['Size']), 'Counts': int(json.loads(root_directory_size)['Size_counts_json']['Counts'])})
+        directory_size = json.dumps(
+            {'Prefix': '/', 'Size': int(json.loads(root_directory_size)['Size_counts_json']['Size']),
+             'Counts': int(json.loads(root_directory_size)['Size_counts_json']['Counts'])})
         directory_size_dict.append(directory_size)
         for prefix in CommonPrefixes:
             CommonPrefixes = prefix['Prefix']
@@ -253,40 +257,41 @@ def _get_list_start(bucket, marker, CommonPrefixes, maxkeys, files_exits):  # �
         print(json.dumps({'Bucket': bucket, 'Size': directory_size, 'Counts': file_count}))
         return 'Success list'
 
-        
-if __name__ == '__main__':
-    bucket = ''  # 传入存储桶名
-    prefix = ''  # 指定需要统计大小的目录；留空代表整个存储桶
-    marker = ''  # 此处请勿修改
-    delimiter = '/'  # 此处请勿修改
-    maxkeys = 1000
 
-    lists = _get_root_directory_list(bucket, marker, maxkeys)
-    version = _get_root_directory_version(lists)
-    if version == '':  
-        #当根目录下没有文件，但可能有子文件夹时
+def _get_list_init(version): #初始化并判断存储桶根目录下是否有文件的各类场景
+    if version == '':
+        # 当根目录下没有文件，但可能有子文件夹时
         try:
-            #当根目录下没有文件，只有子文件夹时
+            # 当根目录下没有文件，只有子文件夹时
             files_exits = 1
             CommonPrefixes = _get_prefix_lists(bucket, prefix, delimiter, marker, maxkeys)
             resp = _get_list_start(bucket, marker, CommonPrefixes, maxkeys, files_exits)
             print(resp)
         except:
-            #当根目录下没有文件，也没有子文件夹时
+            # 当根目录下没有文件，也没有子文件夹时
             files_exits = 2
             CommonPrefixes = ''
             resp = _get_list_start(bucket, marker, CommonPrefixes, maxkeys, files_exits)
             print(resp)
     else:
-        #当根目录下有文件，同时也有子文件夹时
+        # 当根目录下有文件，同时也有子文件夹时
         try:
             files_exits = 3
             CommonPrefixes = _get_prefix_lists(bucket, prefix, delimiter, marker, maxkeys)
             resp = _get_list_start(bucket, marker, CommonPrefixes, maxkeys, files_exits)
             print(resp)
         except:
-            #当根目录下有文件，但没有子文件夹时
+            # 当根目录下有文件，但没有子文件夹时
             files_exits = 4
             CommonPrefixes = ''
             resp = _get_list_start(bucket, marker, CommonPrefixes, maxkeys, files_exits)
             print(resp)
+
+
+if __name__ == '__main__':
+    bucket = ''  # 传入存储桶名
+    prefix = ''  # 指定需要统计大小的目录；留空代表整个存储桶
+    marker = ''  # 此处请勿修改
+    delimiter = '/'  # 此处请勿修改
+    maxkeys = 1000
+    _get_list_init(_get_root_directory_version(_get_root_directory_list(bucket, marker, maxkeys)))
