@@ -1,5 +1,3 @@
-package com.cos.demo;
-
 import com.qcloud.cos.Headers;
 import com.qcloud.cos.auth.BasicCOSCredentials;
 import com.qcloud.cos.auth.COSCredentials;

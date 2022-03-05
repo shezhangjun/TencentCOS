@@ -1,5 +1,3 @@
-package com.cos.demo;
-
 import com.qcloud.cos.Headers;
 import com.qcloud.cos.auth.BasicCOSCredentials;
 import com.qcloud.cos.auth.COSCredentials;
@@ -7,7 +5,6 @@ import com.qcloud.cos.auth.COSSigner;
 import com.qcloud.cos.http.HttpMethodName;
 import com.squareup.okhttp.*;
 
-import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
