@@ -1,3 +1,5 @@
+package com.cos.demo;
+
 import com.qcloud.cos.Headers;
 import com.qcloud.cos.auth.BasicCOSCredentials;
 import com.qcloud.cos.auth.COSCredentials;
@@ -24,17 +26,19 @@ public class Ci_TriggerWorkflow {
         String Bucket = "";
         // 5 需要触发的工作流 ID 参照 https://console.cloud.tencent.com/cos/workflow/list
         String workflowId = "";
-        // 6 使用triggerworkflow生成签名
+        // 6 使用triggerworkflow生成签名，请勿修改！
         String signkey = "/triggerworkflow";
         // 7 需要进行工作流处理的对象名称
         String objectkey = "";
+        // 8 生成此次请求用的HOST
+        String host = Bucket +  ".ci." + region + ".myqcloud.com";
 
         //以下为生成签名部分
         COSSigner signer = new COSSigner();
         Date expirationDate = new Date(System.currentTimeMillis() + 30L * 60L * 1000L);
         Map<String, String> params = new HashMap<String, String>();
         Map<String, String> headers = new HashMap<String, String>();
-        headers.put(Headers.HOST, Bucket +  ".ci." + region + ".myqcloud.com");
+        headers.put(Headers.HOST, host);
         HttpMethodName method = HttpMethodName.POST; //请求方法
         String sign = signer.buildAuthorizationStr(method, signkey, headers, params, cred, expirationDate,true);
         //以上为生成签名部分
@@ -43,7 +47,7 @@ public class Ci_TriggerWorkflow {
         MediaType mediaType = MediaType.parse("application/xml");
         RequestBody body = RequestBody.create(mediaType, "");
         Request request = new Request.Builder()
-                .url("https://" + Bucket +  ".ci." + region + ".myqcloud.com" + signkey +  "?workflowId=" + workflowId + "&object=" + objectkey)
+                .url("https://" + host + signkey +  "?workflowId=" + workflowId + "&object=" + objectkey)
                 .method("POST", body)
                 .addHeader("Authorization", sign)
                 .addHeader("Content-Type", "application/xml")
