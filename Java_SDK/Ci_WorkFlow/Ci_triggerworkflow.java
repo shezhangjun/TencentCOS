@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-public class Ci_triggerworkflow {
+public class Ci_TriggerWorkflow {
     public static void main(String[] args) {
         // 1 初始化用户身份信息（secretId, secretKey）。
         // SECRETID和SECRETKEY请登录访问管理控制台进行查看和管理
