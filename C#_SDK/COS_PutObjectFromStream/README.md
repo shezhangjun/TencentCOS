@@ -1,15 +1,28 @@
-﻿using COSXML.Model.Object;
-using COSXML.Auth;
-using COSXML;
+# TencentCOS
+腾讯云对象存储 .NET(C#) SDK
 
-namespace COSSnippet
-{
-    public class PutObjectFromStream
-    {
+## 使用.NET(C#) SDK 上传文件
 
-        private CosXml cosXml;
+### Windows 环境安装
 
-        PutObjectFromStream()
+* 下载和安装方式参考腾讯云对象存储SDK-[.NET(C#)](https://cloud.tencent.com/document/product/436/32819)
+* Windows环境下安装 `Visual Studio 2019/2022`
+* 如果您的Visual Studio没有安装NuGet，请先安装[NuGet](http://docs.nuget.org/docs/start-here/installing-nuget?spm=a2c4g.11186623.0.0.556e1cd5Nm58dC)。
+* 在Visual Studio中新建或者打开已有的项目，选择工具 > NuGet程序包管理器 > 管理解决方案的NuGet程序包。
+* 搜索Tencent.QCloud.Cos.Sdk，在结果中找到Tencent.QCloud.Cos.Sdk（`适用于.NET Framework`）选择最新版本，单击安装。
+
+### Windwos 环境 .NET(C#) SDK 文件流上传 示例
+
+![image](https://cos.iclay.cn/Page/GitHub_Page_Bed/C%23-PutObject.png)
+
+### Windows 环境 .NET(C#) SDK 使用方法
+
+* 替换下方码块中的`COS_REGION|SECRET_ID|SECRET_KEY|BucketName|ExampleObject|Temp_Source_File`
+* 编译调试
+
+```
+/// 初始化密钥信息
+PutObjectFromStream()
         {
             CosXmlConfig config = new CosXmlConfig.Builder()
               .SetRegion("COS_REGION") // 设置默认的地域, COS 地域的简称请参照 https://cloud.tencent.com/document/product/436/6224 
@@ -24,8 +37,8 @@ namespace COSSnippet
             this.cosXml = new CosXmlServer(config, qCloudCredentialProvider);
         }
 
-        /// 文件流上传, 从 5.4.24 版本开始支持
-        public void PutObjectStream()
+/// 文件流上传, 从 5.4.24 版本开始支持
+public void PutObjectStream()
         {
             try
             {
@@ -64,13 +77,5 @@ namespace COSSnippet
                 //请求失败
                 Console.WriteLine("CosServerException: " + serverEx.GetInfo());
             }
-        }
-
-        static void Main(string[] args)
-        {
-            PutObjectFromStream m = new PutObjectFromStream();
-            /// 从文件流上传对象
-            m.PutObjectStream();
-        }
-    }
 }
+```

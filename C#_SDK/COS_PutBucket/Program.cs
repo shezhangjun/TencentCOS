@@ -31,7 +31,7 @@ namespace COSSnippet
             try
             {
                 // 存储桶名称，此处填入格式必须为 BucketName-APPID, 其中 APPID 获取参考 https://console.cloud.tencent.com/developer
-                string bucket = "examplebucket-1250000000";
+                string bucket = "BucketName";
                 PutBucketRequest request = new PutBucketRequest(bucket);
                 //执行请求
                 PutBucketResult result = cosXml.PutBucket(request);
