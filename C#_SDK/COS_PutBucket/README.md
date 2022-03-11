@@ -3,7 +3,7 @@
 
 ## 使用.NET(C#) SDK 创建存储桶
 
-### Windows环境安装
+### Windows 环境安装
 
 * 下载和安装方式参考腾讯云对象存储SDK-[.NET(C#)](https://cloud.tencent.com/document/product/436/32819)
 * Windows环境下安装 `Visual Studio 2019/2022`
@@ -11,13 +11,13 @@
 * 在Visual Studio中新建或者打开已有的项目，选择工具 > NuGet程序包管理器 > 管理解决方案的NuGet程序包。
 * 搜索Tencent.QCloud.Cos.Sdk，在结果中找到Tencent.QCloud.Cos.Sdk（`适用于.NET Framework`）选择最新版本，单击安装。
 
-### Windwos环境使用.NET(C#) SDK 创建存储桶 示例
+### Windwos 环境使用.NET(C#) SDK 创建存储桶 示例
 
 ![image](https://cos.iclay.cn/Page/GitHub_Page_Bed/C%23-PutBucket.png)
 
-### Windows环境 .NET(C#) SDK 使用方法
+### Windows 环境 .NET(C#) SDK 使用方法
 
-* 替换下方代码块中的`COS_REGION|SECRET_ID|SECRET_KEY|BucketName`
+* 替换下方码块中的`COS_REGION|SECRET_ID|SECRET_KEY|BucketName`
 * 编译调试
 
 ```
