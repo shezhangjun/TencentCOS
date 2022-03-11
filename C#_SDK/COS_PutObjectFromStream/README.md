@@ -17,6 +17,7 @@
 
 ### Windows 环境 .NET(C#) SDK 使用方法
 
+* * 打开 `PutObjectFromStream.sln` 项目解决方案
 * 替换下方码块中的`COS_REGION|SECRET_ID|SECRET_KEY|BucketName|ExampleObject|Temp_Source_File`
 * 编译调试
 
