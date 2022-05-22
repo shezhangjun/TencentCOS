@@ -1,0 +1,2 @@
+cos-python-sdk-v5==1.7.7
+pandas==1.4.2
