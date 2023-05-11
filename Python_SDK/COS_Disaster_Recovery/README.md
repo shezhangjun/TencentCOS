@@ -6,7 +6,7 @@
 
 ### 使用方法
 
-* 推荐Python3.x
+* 推荐使用Python3.x
 * 安装腾讯云对象存储[SDK-Python](https://cloud.tencent.com/document/product/436/12269)  `pip install -U cos-python-sdk-v5` 
 * 安装pandas库  `pip install -U pandas`
 * git clone https://github.com/shezhangjun/TencentCOS.git
