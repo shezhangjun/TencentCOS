@@ -2,7 +2,7 @@
 腾讯云对象存储SDK-Python
 
 ## 使用Python SDK 结合COS多版本功能快速批量恢复数据
-
+* 恢复原理参考文档说明 https://cloud.tencent.com/developer/beta/article/1791791
 
 ### 使用方法
 
