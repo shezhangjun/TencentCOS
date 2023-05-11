@@ -7,7 +7,8 @@
 ### 使用方法
 
 * 推荐Python3.x
-* 先安装腾讯云对象存储[SDK-Python](https://cloud.tencent.com/document/product/436/12269)
+* 安装腾讯云对象存储[SDK-Python](https://cloud.tencent.com/document/product/436/12269)  `pip install -U cos-python-sdk-v5` 
+* 安装pandas库  `pip install -U pandas`
 * git clone https://github.com/shezhangjun/TencentCOS.git
 * 在[DisasterRecovery.py](https://github.com/shezhangjun/TencentCOS/blob/master/Python_SDK/COS_Disaster_Recovery/DisasterRecovery.py) 文件中最下方配置存储桶名以及密钥信息
 
