@@ -1,10 +1,11 @@
 # -*- coding=utf-8
 # author shezhangjun
 # Python3.x
+import logging
 import pandas as pd
 from qcloud_cos import CosConfig
 from qcloud_cos import CosS3Client
-
+logger = logging
 
 copied_object_list = []
 copied_object_mtime = []
@@ -77,20 +78,27 @@ def _recover_main(src_region, src_secret_id, src_secret_key, src_bucket, prefix,
                 print(f'LastModified:{mtime}')
                 if islatest == 'true':  # 标记是最新的记录
                     print(f'最新版文件,拷贝key:{key},version:{versionId}')
-                    _copy_object_to_dst_bucket(dst_region, dst_secret_id, dst_secret_key, src_region, dst_bucket,
-                                               key, src_bucket, key, versionId)
-                    copied_object_list.append(key)
-                    copied_object_mtime.append(mtime)
-                    copied_object_versionid_list.append(versionId)
-                else:
-                    if not _copied_object(obejectkey=key):  # 判断此文件是否被拷贝过,如已拷贝则跳过不复制
-                        print(f'次新版文件,拷贝key:{key},version:{versionId}')
+                    try:
                         _copy_object_to_dst_bucket(dst_region, dst_secret_id, dst_secret_key, src_region, dst_bucket,
                                                    key, src_bucket, key, versionId)
                         copied_object_list.append(key)
                         copied_object_mtime.append(mtime)
                         copied_object_versionid_list.append(versionId)
-
+                    except Exception as e:
+                        logger.error(e)
+                        pass
+                else:
+                    if not _copied_object(obejectkey=key):  # 判断此文件是否被拷贝过,如已拷贝则跳过不复制
+                        print(f'次新版文件,拷贝key:{key},version:{versionId}')
+                        try:
+                            _copy_object_to_dst_bucket(dst_region, dst_secret_id, dst_secret_key, src_region, dst_bucket,
+                                                       key, src_bucket, key, versionId)
+                            copied_object_list.append(key)
+                            copied_object_mtime.append(mtime)
+                            copied_object_versionid_list.append(versionId)
+                        except Exception as e:
+                            logger.error(e)
+                            pass
                     else:
                         print(f'文件已被拷贝复制，此处跳过')
         if response['IsTruncated'] == 'false':
